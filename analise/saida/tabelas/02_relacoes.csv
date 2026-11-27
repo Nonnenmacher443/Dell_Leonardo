@@ -1,0 +1,9 @@
+﻿pai,filha,chave,chave_unica_no_pai,cardinalidade,max_filhos_por_pai,registros_orfaos
+hotels,room_types,hotel_id,True,1:N,3,0
+hotels,daily_market,hotel_id,True,1:N,728,0
+hotels,weekly_performance,hotel_id,True,1:N,104,0
+hotels,rate_decisions,hotel_id,True,1:N,103,0
+hotels,reviews,hotel_id,True,1:N,1733,0
+review_scenarios,reviews,scenario_id,True,1:N,1840,0
+weekly_performance,reviews,hotel_id + week_start,True,1:N,27,0
+weekly_performance,rate_decisions,hotel_id + week_start,True,1:1,1,0

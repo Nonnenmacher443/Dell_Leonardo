@@ -1,0 +1,8 @@
+﻿tabela,linhas,colunas,granularidade,tipos,ausentes
+hotels,14,17,1 hotel,"str: 7, float64: 5, int64: 4, object: 1",nenhum
+room_types,42,10,1 tipo de quarto de 1 hotel,"str: 5, int64: 4, float64: 1",nenhum
+daily_market,10192,58,1 hotel em 1 noite,"float64: 39, str: 10, int64: 7, datetime64[us]: 1, bool: 1",demand_event (9534)
+weekly_performance,1456,41,1 hotel em 1 semana (segunda a domingo),"float64: 29, int64: 6, str: 5, datetime64[us]: 1",demand_event (1246); flow_through (728); mean_rating (27); positive_share (27); sentiment_index (27); response_rate (27)
+rate_decisions,1442,24,1 decisão de preço semanal de 1 hotel + resultado da semana seguinte,"float64: 16, str: 7, datetime64[us]: 1",demand_event (1246)
+reviews,12077,27,1 avaliação de hóspede,"str: 11, int64: 8, datetime64[us]: 3, bool: 3, float64: 2",response_text (3769); response_hours (3769)
+review_scenarios,11,7,1 cenário (motivo) de avaliação,"str: 6, float64: 1",nenhum

@@ -1,0 +1,12 @@
+﻿scenario_id,label,recovery_action,avaliacoes,nota_media,respondidas_pct
+group_trip,Grupo ou família,confirm room allocations before arrival,472,3.9978813559322033,50.847457627118644
+wifi,Wi-Fi e conexão,send the access point log to IT,765,2.7359477124183007,92.94117647058823
+cleanliness,Limpeza,"reclean, inspect and coach the section",868,1.6889400921658986,100.0
+checkin_wait,Fila no check-in,add a queue check at peak arrival,1006,2.8071570576540754,90.85487077534792
+breakfast,Café da manhã e comida,invite the guest back and review the buffet line,1023,3.730205278592375,55.13196480938416
+billing,Cobrança e tarifas,audit the folio and refund where due,1027,1.6309639727361247,100.0
+service_recovery,Problema resolvido bem,log the recovery and brief the shift,1206,4.334162520729685,34.991708126036485
+location,Localização e acesso,none needed,1219,4.58408531583265,30.270713699753898
+noise,Barulho e sono,"offer a move and a sleep kit, note the room",1250,2.4224,100.0
+room_condition,Estado do quarto,block the room and raise a work order,1401,2.481798715203426,100.0
+delight,Superou expectativas,thank the guest and record the staff member,1840,4.844021739130435,29.456521739130437

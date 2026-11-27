@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel de Receita de Port Alder</title>
+  <link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+  <!-- Barra lateral recolhida: abre ao passar o mouse (ou com o botão sanduíche no celular) -->
+  <aside class="lateral" id="lateral" aria-label="Menu do painel">
+    <svg class="batimetria" viewBox="0 0 280 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path d="M40 -20 C 10 160, 90 300, 50 460 S 20 760, 70 920"/>
+      <path d="M90 -20 C 60 160, 140 300, 100 460 S 70 760, 120 920"/>
+      <path d="M140 -20 C 110 160, 190 300, 150 460 S 120 760, 170 920"/>
+      <path d="M190 -20 C 160 160, 240 300, 200 460 S 170 760, 220 920"/>
+      <path d="M240 -20 C 210 160, 290 300, 250 460 S 220 760, 270 920"/>
+    </svg>
+    <button id="sanduiche" class="sanduiche" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="lateral">
+      <svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="marca">
+      <span class="marca-nome">Painel de receita</span>
+      <span class="marca-lugar">Hotéis de Port Alder</span>
+    </div>
+    <nav class="abas" role="tablist" aria-label="Seções do painel" aria-orientation="vertical">
+      <button type="button" role="tab" data-aba="geral" class="ativa" title="Visão geral"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span>Visão geral</span></button>
+      <button type="button" role="tab" data-aba="mars" title="Diária adequada"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12.5 11 5h8v8l-7.5 7.5a1.5 1.5 0 0 1-2.1 0l-5.9-5.9a1.5 1.5 0 0 1 0-2.1Z"/><circle cx="15.5" cy="8.5" r="1.3"/></svg><span>Diária adequada</span></button>
+      <button type="button" role="tab" data-aba="relacoes" title="Dados e relações"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="6" rx="7" ry="2.5"/><path d="M5 6v12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6"/><path d="M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg><span>Dados e relações</span></button>
+      <button type="button" role="tab" data-aba="graficos" title="Gráficos e análises"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 16v-5M12 16V6M17 16v-8"/></svg><span>Gráficos e análises</span></button>
+      <button type="button" role="tab" data-aba="calculos" title="Cálculos"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h1M11.5 12h1M15 12h1M8 16h1M11.5 16h1M15 16h1"/></svg><span>Cálculos</span></button>
+    </nav>
+    <button id="tema" class="botao-tema" type="button" aria-label="Alternar tema claro ou escuro" title="Tema claro/escuro"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16Z" fill="currentColor"/></svg><span>Tema claro/escuro</span></button>
+  </aside>
+  <div class="veu" id="veu" hidden></div>
+
+  <header class="topo">
+    <button class="sanduiche-movel" type="button" aria-label="Abrir menu" aria-controls="lateral"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div>
+      <h1>Painel de receita</h1>
+      <p class="sub">Desempenho, decisões de preço e avaliações de 14 hotéis de Port Alder em 2027 e 2028.</p>
+    </div>
+  </header>
+
+  <section class="filtros" aria-label="Filtros">
+    <label class="pesquisa">Pesquisar
+      <input id="f-busca" type="search" placeholder="Hotel, categoria, gráfico ou termo" autocomplete="off">
+    </label>
+    <label>Ano
+      <select id="f-ano">
+        <option value="todos">2027 e 2028</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+      </select>
+    </label>
+    <label>Categoria
+      <select id="f-tier"><option value="todos">Todas</option></select>
+    </label>
+    <label>Hotel
+      <select id="f-hotel"><option value="todos">Todos</option></select>
+    </label>
+    <button id="limpar" type="button" class="botao-limpar">Limpar filtros</button>
+    <p id="contexto" class="contexto" aria-live="polite"></p>
+  </section>
+
+  <p id="vazio" class="vazio" hidden>Nenhum dado para essa combinação de filtros. Escolha outro hotel ou categoria.</p>
+
+  <main id="conteudo">
+  <div class="aba" data-aba="geral">
+    <section class="kpis" aria-label="Indicadores-chave">
+      <article class="kpi"><h2>Receita total</h2><p id="k-receita">–</p><span>quartos + extras, US$</span></article>
+      <article class="kpi"><h2>Ocupação</h2><p id="k-ocup">–</p><span>quartos vendidos ÷ disponíveis</span></article>
+      <article class="kpi"><h2>Diária média (ADR)</h2><p id="k-adr">–</p><span>diária média por quarto vendido</span></article>
+      <article class="kpi"><h2>Receita por quarto (RevPAR)</h2><p id="k-revpar">–</p><span>receita de quartos por quarto disponível</span></article>
+      <article class="kpi"><h2>Índice de receita (RGI)</h2><p id="k-rgi">–</p><span id="k-rgi-sub">RevPAR contra os concorrentes (100 = empate)</span></article>
+      <article class="kpi"><h2>Nota média</h2><p id="k-nota">–</p><span id="k-nota-sub">avaliações de 1 a 5 estrelas</span></article>
+    </section>
+
+    <h2 class="secao">Como o ano se comporta</h2>
+    <section class="grade">
+      <article class="cartao largo">
+        <div class="cartao-topo">
+          <h3 id="t-evolucao">Evolução mensal</h3>
+          <div class="segmentado" role="group" aria-label="Métrica do gráfico">
+            <button type="button" data-metrica="ocup" class="ativo">Ocupação</button>
+            <button type="button" data-metrica="adr">ADR</button>
+            <button type="button" data-metrica="revpar">RevPAR</button>
+          </div>
+        </div>
+        <p class="nota-grafico">Os pontos maiores marcam meses com eventos de demanda (feiras, regata, festival).</p>
+        <div class="area-grafico"><canvas id="g-evolucao"></canvas></div>
+      </article>
+
+    </section>
+
+    <h2 class="secao">Contra os concorrentes</h2>
+    <section class="grade">
+      <article class="cartao">
+        <h3>Quem supera os concorrentes diretos? (RGI)</h3>
+        <p class="nota-grafico">Acima de 100, o hotel fatura mais por quarto que a média do seu grupo de concorrentes.</p>
+        <div class="area-grafico alto"><canvas id="g-rgi"></canvas></div>
+      </article>
+
+      <article class="cartao">
+        <h3>Mapa de posicionamento: preço × ocupação</h3>
+        <p class="nota-grafico">Índices contra o grupo de concorrentes. As linhas em 100 dividem os quadrantes.</p>
+        <div class="area-grafico alto"><canvas id="g-quadrante"></canvas></div>
+      </article>
+
+    </section>
+
+    <h2 class="secao">Decisões de preço e voz dos hóspedes</h2>
+    <section class="grade">
+      <article class="cartao">
+        <h3>As decisões de preço funcionaram?</h3>
+        <p class="nota-grafico">Resultado da semana seguinte (RevPAR ±1,5%). É uma observação, não prova de causa.</p>
+        <div class="area-grafico"><canvas id="g-decisoes"></canvas></div>
+      </article>
+
+      <article class="cartao">
+        <h3>Distribuição das notas</h3>
+        <p class="nota-grafico" id="n-notas">Percentual das avaliações em cada nota.</p>
+        <div class="area-grafico"><canvas id="g-notas"></canvas></div>
+      </article>
+
+      <article class="cartao largo">
+        <h3>Por que os hóspedes avaliam assim? (cenários)</h3>
+        <p class="nota-grafico">Quantidade de avaliações por motivo. Passe o mouse para ver a nota média e a ação recomendada.</p>
+        <div class="area-grafico alto"><canvas id="g-cenarios"></canvas></div>
+      </article>
+    </section>
+
+    <h2 class="secao">Hotéis em detalhe</h2>
+    <section class="cartao tabela-cartao">
+      <h3>Resumo por hotel</h3>
+      <p class="nota-grafico">Clique no cabeçalho de uma coluna para ordenar. A caixa de pesquisa filtra as linhas.</p>
+      <div class="tabela-rolagem">
+        <table id="tabela">
+          <thead>
+            <tr>
+              <th data-col="nome">Hotel</th>
+              <th data-col="tier">Categoria</th>
+              <th data-col="receita" class="num">Receita (US$)</th>
+              <th data-col="ocup" class="num">Ocupação</th>
+              <th data-col="adr" class="num">ADR</th>
+              <th data-col="revpar" class="num">RevPAR</th>
+              <th data-col="rgi" class="num">RGI</th>
+              <th data-col="nota" class="num">Nota</th>
+              <th data-col="ruins" class="num">% 1–2★</th>
+            </tr>
+          </thead>
+          <tbody class="buscavel"></tbody>
+        </table>
+      </div>
+      <p class="sem-resultado" hidden>Nenhum hotel corresponde à pesquisa.</p>
+    </section>
+  </div>
+
+  <!-- ================= Diária adequada (MARS) ================= -->
+  <div class="aba" data-aba="mars" hidden>
+    <section class="kpis" aria-label="Resumo da diária adequada">
+      <article class="kpi"><h2>Abaixo do MARS</h2><p id="m-abaixo">–</p><span>hotéis com ADR mais de 2% abaixo</span></article>
+      <article class="kpi"><h2>Dentro da faixa</h2><p id="m-dentro">–</p><span>hotéis entre −2% e +2%</span></article>
+      <article class="kpi"><h2>Acima do MARS</h2><p id="m-acima">–</p><span>hotéis com ADR mais de 2% acima</span></article>
+      <article class="kpi"><h2>Noites fora da faixa ±6%</h2><p id="m-fora">–</p><span id="m-fora-sub">das noites filtradas</span></article>
+    </section>
+
+    <section class="grade">
+      <article class="cartao largo">
+        <h3>Quanto cada hotel cobra acima ou abaixo da diária adequada</h3>
+        <p class="nota-grafico">Diferença entre o ADR cobrado e o MARS (ponderados pelos quartos vendidos). A faixa sombreada é ±2%.</p>
+        <div class="area-grafico alto"><canvas id="g-mars"></canvas></div>
+      </article>
+    </section>
+
+    <section class="cartao tabela-cartao">
+      <h3>Diária adequada e o que fazer, por hotel</h3>
+      <p class="nota-grafico">A recomendação cruza o preço (contra o MARS) com a ocupação contra os concorrentes (MPI).</p>
+      <div class="tabela-rolagem">
+        <table>
+          <thead><tr>
+            <th>Hotel</th><th>Categoria</th><th class="num">ADR cobrado</th><th class="num">MARS adequado</th>
+            <th class="num">Diferença</th><th class="num">MPI</th><th class="num">Noites abaixo / acima ±6%</th><th>O que fazer</th>
+          </tr></thead>
+          <tbody id="t-mars" class="buscavel"></tbody>
+        </table>
+      </div>
+      <p class="sem-resultado" hidden>Nenhum hotel corresponde à pesquisa.</p>
+    </section>
+
+    <section class="cartao tabela-cartao">
+      <h3>Tabela de diária adequada por estação (MARS médio, US$)</h3>
+      <p class="nota-grafico">Referência de preço para cada gerente: média do MARS das noites de cada estação.</p>
+      <div class="tabela-rolagem">
+        <table>
+          <thead><tr><th>Hotel</th><th class="num">Inverno</th><th class="num">Primavera</th><th class="num">Verão</th><th class="num">Outono</th></tr></thead>
+          <tbody id="t-estacao" class="buscavel"></tbody>
+        </table>
+      </div>
+      <p class="sem-resultado" hidden>Nenhum hotel corresponde à pesquisa.</p>
+    </section>
+
+    <section class="cartao tabela-cartao" id="exemplo-mars"></section>
+  </div>
+
+  <!-- ================= Dados e relações ================= -->
+  <div class="aba" data-aba="relacoes" hidden>
+    <section class="cartao tabela-cartao">
+      <h3>As 7 tabelas (arquivos JSON)</h3>
+      <p class="nota-grafico">Granularidade = o que uma linha representa. Os ausentes são esperados e explicados no README do dataset.</p>
+      <div class="tabela-rolagem">
+        <table>
+          <thead><tr><th>Tabela</th><th class="num">Linhas</th><th class="num">Colunas</th><th>Uma linha é…</th><th>Ausentes</th></tr></thead>
+          <tbody id="t-tabelas" class="buscavel"></tbody>
+        </table>
+      </div>
+      <p class="sem-resultado" hidden>Nenhuma tabela corresponde à pesquisa.</p>
+    </section>
+    <section class="cartao tabela-cartao">
+      <h3>Onde as tabelas se juntam</h3>
+      <p class="nota-grafico">Verificado no Python: chave única no pai, máximo de filhos por pai e registros órfãos.</p>
+      <div class="tabela-rolagem">
+        <table>
+          <thead><tr><th>Tabela pai</th><th>Tabela filha</th><th>Chave da junção</th><th>Cardinalidade</th><th class="num">Máx. filhos</th><th class="num">Órfãos</th></tr></thead>
+          <tbody id="t-relacoes" class="buscavel"></tbody>
+        </table>
+      </div>
+      <p class="sem-resultado" hidden>Nenhuma relação corresponde à pesquisa.</p>
+    </section>
+    <section class="grade">
+      <figure class="cartao figura buscavel-item"><img src="img/G01_relacoes_tabelas.png" alt="Mapa de relações entre as tabelas" loading="lazy"><figcaption>Mapa de relações (hotel_id é o centro)</figcaption></figure>
+      <figure class="cartao figura buscavel-item"><img src="img/diagrama_er.png" alt="Diagrama ER do banco MySQL" loading="lazy"><figcaption>Diagrama ER do banco MySQL (PK, FK e cardinalidades)</figcaption></figure>
+    </section>
+  </div>
+
+  <!-- ================= Galeria de gráficos ================= -->
+  <div class="aba" data-aba="graficos" hidden>
+    <div class="chips" id="grupos" role="group" aria-label="Filtrar por assunto"></div>
+    <section class="galeria" id="galeria"></section>
+    <p class="sem-resultado vazio" hidden>Nenhum gráfico corresponde à pesquisa.</p>
+  </div>
+
+  <!-- ================= Cálculos ================= -->
+  <div class="aba" data-aba="calculos" hidden>
+    <section class="galeria calculos">
+      <article class="cartao buscavel-item"><h3>Ocupação</h3><code>quartos vendidos ÷ quartos disponíveis</code><p>Quanto da casa foi vendida.</p></article>
+      <article class="cartao buscavel-item"><h3>ADR (diária média)</h3><code>receita de quartos ÷ quartos vendidos</code><p>Quanto rendeu cada quarto vendido.</p></article>
+      <article class="cartao buscavel-item"><h3>RevPAR</h3><code>receita de quartos ÷ quartos disponíveis</code><p>Receita por quarto, vendido ou não. Igual a ocupação × ADR.</p></article>
+      <article class="cartao buscavel-item"><h3>RGI, ARI e MPI</h3><code>RGI = RevPAR ÷ RevPAR dos concorrentes × 100</code><code>ARI = ADR ÷ ADR dos concorrentes × 100</code><code>MPI = ocupação ÷ ocupação dos concorrentes × 100</code><p>100 = empate com o grupo de concorrentes (mesma categoria). RGI ≈ ARI × MPI ÷ 100.</p></article>
+      <article class="cartao buscavel-item"><h3>MARS (diária adequada)</h3><code>mediana(ADR dos concorrentes na noite) × posicionamento do hotel ÷ mediana(posicionamento dos concorrentes)</code><p>Concorrentes = mesma categoria, sem o próprio hotel. Faixa aceitável: MARS ± 6%. Reproduzido pelo programa em 100% das 10.192 noites.</p></article>
+      <article class="cartao buscavel-item"><h3>Posição de preço</h3><code>ADR ÷ MARS</code><p>1,00 = cobrou exatamente o MARS; 0,95 = 5% abaixo.</p></article>
+      <article class="cartao buscavel-item"><h3>Regra de ação (subir, manter, baixar)</h3><code>baixar se posição ≥ 1,12; subir se evento, reservas ≥ 0,70 e posição ≤ 1,02; subir se reservas ≥ 0,80 e posição ≤ 0,98; subir se reservas ≥ 0,72 e posição ≤ 0,92; baixar se reservas ≤ 0,54 e posição ≥ 1,00; baixar se reservas ≤ 0,62 e posição ≥ 1,06; senão manter</code><p>Programada em regra_acao(): bate com 97,0% dos rótulos (3% são ruído proposital do dataset).</p></article>
+      <article class="cartao buscavel-item"><h3>Média ponderada, não média de médias</h3><code>ADR de um grupo = Σ receita ÷ Σ quartos vendidos</code><p>Por isso o ADR geral é US$ 224, e não US$ 207 (média simples das linhas diárias). Hotéis grandes pesam mais, como na vida real.</p></article>
+      <article class="cartao buscavel-item"><h3>Correlação de Pearson</h3><code>r = cov(X, Y) ÷ (desvio(X) × desvio(Y))</code><p>De −1 a +1. Mede relação linear, não causa (pandas: df.corr()).</p></article>
+      <article class="cartao buscavel-item"><h3>Frequências das notas</h3><code>relativa = contagem ÷ total; acumulada = soma das relativas até a nota</code><p>pandas: value_counts() e cumsum(). 55,8% das avaliações têm 3★ ou menos.</p></article>
+      <article class="cartao buscavel-item"><h3>Projeção 2029</h3><code>receita por dia 2028 × (1 + crescimento por dia 2027→2028) × dias do mês</code><p>Por dia, porque 2027 tem só 362 dias nos dados e 2028 tem 366.</p></article>
+      <article class="cartao buscavel-item"><h3>Funções usadas (pandas)</h3><p>read_json(lines=True), to_datetime, isna, explode, value_counts, cumsum, isin, merge, groupby/agg, median, corr, crosstab, pivot/unstack, apply, to_csv.</p></article>
+      <article class="cartao buscavel-item"><h3>Funções usadas (matplotlib)</h3><p>subplots, bar/barh, plot, scatter, boxplot, imshow, axhline/axvline/axvspan, annotate/text, savefig.</p></article>
+      <article class="cartao buscavel-item"><h3>Funções próprias</h3><p>inspecionar_tabela(), verificar_relacao(), calcular_mars(), regra_acao(), recomendacao(), registrar(), tabela_md(), salvar_grafico().</p></article>
+      <article class="cartao buscavel-item"><h3>MySQL</h3><p>CREATE TABLE com PRIMARY KEY, FOREIGN KEY e CHECK; JOIN, LEFT JOIN, GROUP BY, HAVING, CASE, RANK() OVER (PARTITION BY), UNION ALL.</p></article>
+    </section>
+    <p class="sem-resultado vazio" hidden>Nenhum cálculo corresponde à pesquisa.</p>
+  </div>
+  </main>
+
+  <footer class="rodape">
+    <p><strong>Fonte:</strong> dataset <em>Nice Rooms: Hotel Revenue, MARS and Reviews</em> (CC BY 4.0), via
+      <a href="https://github.com/labeduc/trabalho-final" target="_blank" rel="noopener">labeduc/trabalho-final</a>.
+      <strong>Dados sintéticos:</strong> hotéis, cidade e números são fictícios. Conclusões valem só para Port Alder.</p>
+    <p id="gerado"></p>
+  </footer>
+
+  <!-- Chart.js 4.4.6 salvo localmente: o painel abre mesmo sem internet -->
+  <script src="lib/chart.umd.js"></script>
+  <script src="lib/hammer.min.js"></script>
+  <script src="lib/chartjs-plugin-zoom.min.js"></script>
+  <script src="dados.js"></script>
+  <script src="analises.js?v=2"></script>
+  <script src="script.js?v=9"></script>
+</body>
+</html>
